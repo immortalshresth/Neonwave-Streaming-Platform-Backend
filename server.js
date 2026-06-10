@@ -5,7 +5,10 @@ const { exec } = require('youtube-dl-exec');
 const path = require('path');
 const app = express();
 app.use(cors({
-    origin: 'https://night-groove-app-main.vercel.app/' 
+    origin: [
+        'https://night-groove-app-main.vercel.app',
+        'https://night-groove-app-main.panigrahishresth232.workers.dev'
+    ]
 }));
 
 // ⚡ YOUTUBE API AUTH
@@ -79,12 +82,12 @@ app.get('/api/stream', (req, res) => {
 
     // Run the yt-dlp binary and tell it to pipe the raw audio file to stdout
 // Run the yt-dlp binary and tell it to pipe the raw audio file to stdout
-    const subprocess = exec(videoUrl, {
-        output: '-',           // Send data to stdout instead of saving a file
-        format: 'bestaudio',   // Grab the highest quality audio track
+const subprocess = exec(videoUrl, {
+        output: '-',           
+        format: 'bestaudio',   
         noWarnings: true,
         preferFreeFormats: true,
-        cookies: path.join(__dirname, 'cookies.txt') // ⚡ THE VIP TICKET (Bypasses Bot Protection)
+        cookies: path.join(__dirname, 'cookies.txt') 
     });
 
     // Pipe the raw audio data directly into the React frontend response
